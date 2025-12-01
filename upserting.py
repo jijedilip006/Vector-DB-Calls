@@ -1,9 +1,6 @@
-import os
 from pinecone import Pinecone
 
-api_key=os.getenv("PINECONE_API_KEY")
-
-pc = Pinecone(api_key="pcsk_6g3cAn_T7qTFzj7v1BWKHKVSEceNtZrbM7cjRuUjHXyYdSh9hCum8iqAKd1T1gTZpzQpPs")
+pc = Pinecone(api_key="") #add your own API key
 
 index_name = "pinecone-client-testing"
 
