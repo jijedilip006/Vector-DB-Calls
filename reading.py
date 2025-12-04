@@ -14,7 +14,7 @@ dense_index = pc.Index(name=index_name)
 
 def print_results(search_results):
     for hit in search_results['result']['hits']:
-        print(f"id: {hit['_id']:<5} | score: {round(hit['_score'], 3):<5} | category: {hit['fields']['category']:<10} | text: {hit['fields']['chunk_text']:<50}")
+        print(f"id: {hit['_id']:<5} | score: {round(hit['_score'], 3):<5} | text: {hit['fields']['chunk_text']:<50}")
 
 
 # Define the query
@@ -24,7 +24,7 @@ query = "What are the table of contents"
 results = dense_index.search(
     namespace="testing1-namespace",
     query=SearchQuery(
-        top_k=10,
+        top_k=1,
         inputs={'text': query}
     )
 )

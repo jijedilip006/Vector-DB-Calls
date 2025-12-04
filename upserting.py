@@ -9,7 +9,7 @@ count=1
 text=''
 try:
     for page in document:
-        records.append({"_id":"rec"+str(count),"chunk_text":page.get_text(),"category":"Testing"})
+        records.append({"_id":"rec"+str(count),"chunk_text":page.get_text()})
         count+=1
 
 finally:
