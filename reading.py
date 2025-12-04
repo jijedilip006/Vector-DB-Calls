@@ -1,7 +1,7 @@
 from pinecone import Pinecone,SearchQuery,SearchRerank
 
 
-pc = Pinecone(api_key="") #Add your own API key
+pc = Pinecone(api_key="pcsk_6g3cAn_T7qTFzj7v1BWKHKVSEceNtZrbM7cjRuUjHXyYdSh9hCum8iqAKd1T1gTZpzQpPs") #Add your own API key
 
 index_name = "pinecone-client-testing"
 
@@ -18,11 +18,11 @@ def print_results(search_results):
 
 
 # Define the query
-query = "Famous historical structures and monuments"
+query = "What are the table of contents"
 
 # Search the dense index
 results = dense_index.search(
-    namespace="testing-namespace",
+    namespace="testing1-namespace",
     query=SearchQuery(
         top_k=10,
         inputs={'text': query}
