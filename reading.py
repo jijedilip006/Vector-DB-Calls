@@ -18,7 +18,7 @@ def print_results(search_results):
 
 
 # Define the query
-query = "What are the table of contents"
+query = "How to delete employee profile?"
 
 # Search the dense index
 results = dense_index.search(
