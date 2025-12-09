@@ -19,7 +19,7 @@ Why use it?
 - Preserves document structure and context
 
 Usage:
-    python 04_hybrid_chunking.py
+    python chunking.py
 """
 
 from docling.document_converter import DocumentConverter
@@ -111,14 +111,13 @@ def save_chunks(chunks, chunker, output_path: str):
     record=[]
     with open(output_path, 'w', encoding='utf-8') as f:
         for i, chunk in enumerate(chunks):
-            print(i)
             f.write(f"{'='*60}\n")
             f.write(f"CHUNK {i}\n")
             f.write(f"{'='*60}\n")
 
             # Use contextualize to preserve headings and metadata
             contextualized_text = chunker.contextualize(chunk=chunk)
-            record.append(contextualized_text)
+            record.append((i,contextualized_text))
             f.write(contextualized_text)
             f.write("\n\n")
 
@@ -149,19 +148,11 @@ def main():
         output_path = "docling-rag-agent\\docling_basics\\output\\output_chunks.txt"
         save_chunks(chunks, chunker, output_path)
 
-        print("\n" + "=" * 60)
-        print("KEY BENEFITS OF HYBRID CHUNKING")
-        print("=" * 60)
-        print("✓ Respects document structure (sections, paragraphs)")
-        print("✓ Token-aware (fits embedding model limits)")
-        print("✓ Semantic coherence (doesn't split mid-sentence)")
-        print("✓ Metadata preservation (headings, document context)")
-        print("✓ Ready for RAG (optimized chunk sizes)")
-
     except Exception as e:
         print(f"\n✗ Error: {e}")
         import traceback
         traceback.print_exc()
 
+#For testing
 if __name__ == "__main__":
     main()
