@@ -3,25 +3,29 @@
 
 from google import genai
 from google.genai import types
+import os
+
 
 # Initialize Gemini Client
 # Get your key from: https://aistudio.google.com/
-client = genai.Client(api_key="GEMINI_API_KEY")
+api_key=os.getenv("GEMINI_API_KEY")
+client = genai.Client(api_key=api_key)
 
 def generate_answer(query, search_results):
-    # 1. Prepare Context (Same as before)
-    for hit in search_results['result']['hits']:
-        context_text = "\n\n".join(hit['fields']['chunk_text'])
-    print("Context prepared")
+    # --- FIX 1: Correctly joining the context ---
+    # Extract just the text from the hits into a list
+    chunks = [hit['fields']['chunk_text'] for hit in search_results['result']['hits']]
+    
+    # Join the list into one big string
+    context_text = "\n\n".join(chunks)
 
     # 2. Define System Instructions
-    # Gemini uses a specific config parameter for system instructions
     sys_instruction = """
     You are a helpful HR assistant. 
     Answer the user's question using ONLY the context provided below.
     If the answer is not in the context, state that you cannot find it.
     """
-    print("Sys instructions set")
+
     # 3. Create the Prompt
     user_prompt = f"""
     Context Information:
@@ -30,23 +34,35 @@ def generate_answer(query, search_results):
     User Question: 
     {query}
     """
-    print("Prompt created....Attempting to generate response")
-    # 4. Call Gemini (Using 1.5-flash for speed/efficiency)
+
+    # 4. Call Gemini
     try:
-        print("try conditioned started")
-        print("Prompt generation starting...")
+        # Ensure your API Key is actually set here!
+        # If you are using "GEMINI_API_KEY" literally, it will fail.
         response = client.models.generate_content(
-            model="gemini-1.5-flash",
+            model="gemini-2.5-flash",
             contents=user_prompt,
             config=types.GenerateContentConfig(
                 system_instruction=sys_instruction,
-                temperature=0.2, # Low temperature for factual answers
+                temperature=0.2,
             )
         )
-        print("Response created successfully")
-        print(response.text)
+        print(response.text)  # Return the text to the main script
+        
     except Exception as e:
-        return f"Error generating answer: {e}"
+        # This will catch invalid API keys or connection errors
+        print(f"Error generating answer: {e}")
+
+if __name__ == "__main__":
+    query="test"
+    results="Test"
+    # --- Run the function ---
+    print("\nThinking (Gemini)...")
+    final_answer = generate_answer(query, results)
+
+    print("-" * 50)
+    print(f"🤖 Gemini Answer:\n{final_answer}")
+    print("-" * 50)
 
 if __name__ == "__main__":
     query="test"
