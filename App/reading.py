@@ -19,7 +19,7 @@ def print_results(search_results):
 
 
 # Define the query
-query = "How to delete employee profile?"
+query = input("Enter your question....")
 
 # Search the dense index
 results = dense_index.search(
@@ -30,6 +30,6 @@ results = dense_index.search(
     )
 )
 
-print_results(results)
+# print_results(results)
 
 generate_answer(query,results)
