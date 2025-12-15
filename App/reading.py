@@ -19,17 +19,17 @@ def print_results(search_results):
 
 
 # Define the query
-query = input("Enter your question....")
+query = input("Enter your question....\n")
 
 # Search the dense index
 results = dense_index.search(
-    namespace="testing1-namespace",
+    namespace="testing2-namespace",
     query=SearchQuery(
-        top_k=1,
+        top_k=20,
         inputs={'text': query}
     )
 )
 
 # print_results(results)
-
+print("Thinking.....")
 generate_answer(query,results)
