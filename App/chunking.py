@@ -109,7 +109,7 @@ def analyze_chunks(chunks, tokenizer):
 def save_chunks(chunks, chunker, output_path: str):
     """Save chunks to file with separators, preserving context and headings."""
     record=[]
-    with open(output_path, 'w', encoding='utf-8') as f:
+    with open(output_path, 'a', encoding='utf-8') as f:
         for i, chunk in enumerate(chunks):
             f.write(f"{'='*60}\n")
             f.write(f"CHUNK {i}\n")
