@@ -17,9 +17,9 @@ for pdf_path in pdf_paths:
         record=save_chunks(chunks,chunker,output_path)
         for id,chunk in record:
             records.append({"_id":"rec"+str(count),"chunk_text":chunk})
-            dense_index.upsert_records(namespace="testing2-namespace", records=records)
             count+=1
             print(count)
+        dense_index.upsert_records(namespace="testing2-namespace", records=records)
         print('='*60)
         print("RECORDS HAVE BEEN UPSERTED. RESETTING RECORDS....")
         records=[]
