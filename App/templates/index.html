@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+    <img src="{{ url_for('static', filename='logo.jpg') }}" class="corner-logo" alt="Company Logo">
+
+    <div class="chat-container">
+        <header>
+            Support Assistant
+        </header>
+
+        <div id="chatbox">
+            <div id="welcome-screen">
+                <div class="welcome-icon">👋</div>
+                <h2>How can I help you?</h2>
+                <p>I can help with Training Manuals. Type a message below to get started!</p>
+            </div>
+        </div>
+
+        <div class="input-area">
+            <input type="text" id="user-input" placeholder="Ask a question..." autocomplete="off">
+            <button id="send-btn" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+//Main function
+async function sendMessage() {
+    const input = document.getElementById('user-input');
+    const chatbox = document.getElementById('chatbox');
+    const welcome = document.getElementById('welcome-screen');
+    
+    if (!input || !chatbox) return;
+
+    const message = input.value.trim();
+    if (!message) return;
+
+    // Remove welcome screen
+    if (welcome) welcome.remove();
+
+    // Add User Message
+    chatbox.innerHTML += `<div class="message user-msg">${message}</div>`;
+    input.value = '';
+
+    // Add Thinking bubble
+    const tempId = "ai-" + Date.now();
+    chatbox.innerHTML += `<div id="${tempId}" class="message bot-msg"><span class="thinking-text">Thinking...</span></div>`;
+    chatbox.scrollTop = chatbox.scrollHeight;
+
+    try {
+        const response = await fetch('/ask', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: message })
+        });
+
+        const data = await response.json();
+        const aiBubble = document.getElementById(tempId);
+        
+        // Clear "Thinking..." and start progressive typing
+        aiBubble.innerHTML = ""; 
+        // typeWriter(data.response, aiBubble, chatbox);
+        typeWriter(marked.parse(data.response), aiBubble, chatbox);
+
+    } catch (error) {
+        const aiBubble = document.getElementById(tempId);
+        if(aiBubble) aiBubble.innerText = "Error: Could not connect to server.";
+    }
+}
+// Typewrite effect
+function typeWriter(text, element, chatbox) {
+    let i = 0;
+    const speed = 15; 
+
+    function type() {
+        if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            i++;
+            chatbox.scrollTop = chatbox.scrollHeight;
+            setTimeout(type, speed);
+        }
+    }
+    type();
+}
+
+//Enter Key Listener 
+document.getElementById('user-input').addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+        e.preventDefault(); // Prevents the page from refreshing
+        sendMessage();
+    }
+});
+    </script>
+</body>
+</html>
