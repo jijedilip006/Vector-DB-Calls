@@ -170,3 +170,29 @@ button:hover {
     50% { opacity: 1; }
     100% { opacity: 0; }
 }
+
+/* Style for tables in the chat bubbles */
+.bot-msg table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+    font-size: 0.9em;
+    background-color: #f9f9f9; /* Light grey background like your image */
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.bot-msg th, .bot-msg td {
+    border: 1px solid #ddd; /* This adds the borders */
+    padding: 12px 15px;
+    text-align: left;
+}
+
+.bot-msg th {
+    background-color: #eeeeee; /* Darker header for Step/Description */
+    font-weight: bold;
+}
+
+.bot-msg tr:nth-child(even) {
+    background-color: #f2f2f2; /* Subtle zebra striping */
+}
