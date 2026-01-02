@@ -1,0 +1,16 @@
+# Environments
+.venv/
+venv/
+env/
+
+# Secrets (Where your SharePoint IDs should live)
+.env
+
+# Docling / Local Outputs
+output.txt
+output_sync.txt
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
