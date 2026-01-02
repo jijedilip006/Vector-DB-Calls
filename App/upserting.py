@@ -1,7 +1,8 @@
 from pinecone import Pinecone
 import pymupdf as fitz
 from chunking import chunk_document, analyze_chunks, save_chunks
-pc = Pinecone(api_key="pcsk_6g3cAn_T7qTFzj7v1BWKHKVSEceNtZrbM7cjRuUjHXyYdSh9hCum8iqAKd1T1gTZpzQpPs") #add your own API key
+import os
+pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY")) #add your own API key
 pdf_paths=["Training manual -Employee profile.pdf","Training manual -Roster group Assignment.pdf","Training Manual -Workload Planner.pdf","Training Manual- Roster Creation & Employee Roster.pdf","Training Manual-Final Booking Report.pdf","Training Manual-HSSE Planning.pdf","Training Manual-Lashing Deployment.pdf","Training Manual-Maritime Setup.pdf","Training Manual-Prime Mover Planning.pdf","Training Manual-RTG planning.pdf","Training Manual-Stackers Planning.pdf","Training Manual-System Definitions.pdf","Training Manual-Time and Attendance.pdf","Training Manual-Workforce Execution.pdf"]
 max_tokens=2048
 count = 1

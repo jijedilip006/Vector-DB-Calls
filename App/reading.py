@@ -25,7 +25,7 @@ query = input("Enter your question....\n")
 results = dense_index.search(
     namespace="testing2-namespace",
     query=SearchQuery(
-        top_k=20,
+        top_k=1000,
         inputs={'text': query}
     )
 )

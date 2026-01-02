@@ -27,10 +27,10 @@ from docling.chunking import HybridChunker
 from transformers import AutoTokenizer
 from pathlib import Path
 
-def chunk_document(file_path: str ,max_tokens: int = 512):
+def chunk_document(file_path: str ,file_name: str, max_tokens: int = 2048):
     """Convert and chunk document using HybridChunker."""
 
-    print(f"\n📄 Processing: {Path(file_path).name}")
+    print(f"\n📄 Processing: {file_name}")
 
     # Step 1: Convert document to DoclingDocument
     print("   Step 1: Converting document...")
