@@ -20,6 +20,7 @@ def generate_answer(query, search_results):
     - Use bullet points or numbered lists for steps.
     - Ensure each step is on a new line.
     - Format the text based on user prompt only if prompted, if not give as plain text
+    - Anything involving steps should be given in a table with 2 columns, one for the steps and one for the description
     If the answer is not in the context, state that you cannot find it.
     """
 
